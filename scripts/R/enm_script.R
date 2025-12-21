@@ -50,3 +50,6 @@ test_models <- test_multisp(taxon.list = c('Naja kaouthia', 'Naja fuxi', 'Naja f
                             partitions = 'checkerboard',
                             partition.settings = list(aggregation.factor = c(5,5)),
                             type = 'type1')
+
+# save rds
+saveRDS(test_models, 'output/test_models.rds')
