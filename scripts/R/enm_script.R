@@ -30,9 +30,9 @@ head(nafu)
 head(nafu_viet)
 
 # bg
-naka_bg <- read.csv('data/bg/Naja_kaouthia_bg.csv') %>% dplyr::select(-1)
-nafu_bg <- read.csv('data/bg/Naja_fuxi_bg.csv') %>% dplyr::select(-1)
-nafu_viet_bg <- read.csv('data/bg/Naja_fuxi_viet_bg.csv') %>% dplyr::select(-1)
+naka_bg <- read.csv('data/bg/Naja_kaouthia_bg_biasCor.csv') %>% dplyr::select(-1)
+nafu_bg <- read.csv('data/bg/Naja_fuxi_bg_biasCor.csv') %>% dplyr::select(-1)
+nafu_viet_bg <- read.csv('data/bg/Naja_fuxi_viet_bg_biasCor.csv.csv') %>% dplyr::select(-1)
 
 head(naka_bg)
 head(nafu_bg)
