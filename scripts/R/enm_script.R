@@ -47,8 +47,8 @@ test_models <- test_multisp(taxon.list = c('Naja kaouthia', 'Naja fuxi', 'Naja f
                             envs = clim,
                             tune.args = list(fc = c('L', 'Q', 'H', 'P', 'LQ', 'LP', 'QH', 'QP', 'HP', 'LQH', 'LQP', 'LQHP', 'LQHPT'), 
                                              rm = seq(0.5,5, by = 0.5)),
-                            partitions = 'checkerboard',
-                            partition.settings = list(aggregation.factor = c(5,5)),
+                            partitions = 'randomkfold',
+                            partition.settings = list(kfolds = 10),
                             type = 'type1')
 
 # save rds
