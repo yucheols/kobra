@@ -26,7 +26,7 @@ ext <- c(72.999828366, 111.166822309, -0.122111598, 34.637115029)
 
 ####  climate data
 # load == WorldClim v2.1 == 2.5 arcmin resolution == also clip to extent
-clim <- rast(list.files(path = 'D:/env layers/wc2-5/', pattern = '.bil$', full.names = T))
+clim <- rast(list.files(path = 'E:/env layers/wc2-5/', pattern = '.bil$', full.names = T))
 clim <- crop(clim, ext)
 plot(clim[[1]])
 
