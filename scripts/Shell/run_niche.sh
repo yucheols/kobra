@@ -1,0 +1,20 @@
+#!/bin/sh
+#SBATCH --job-name=cobra_niche
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=30
+#SBATCH --time=300:00:00
+#SBATCH --mem=300G
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=yshin@amnh.org
+#SBATCH --output=/home/yshin/mendel-nas1/kobra/output/bash_logs/slurm-%x_%j.log
+#SBATCH --error=/home/yshin/mendel-nas1/kobra/output/bash_logs/slurm-%x_%j.err
+
+# load conda in batch mode
+source /home/yshin/mendel-nas1/miniconda3/etc/profile.d/conda.sh
+
+# activate conda environment that contains R and all necessary packages
+conda activate nsdm_hpc
+cd /home/yshin/mendel-nas1/kobra  # this will be the R working directory on the cluster
+
+# run the R script
+Rscript /home/yshin/mendel-nas1/kobra/scripts/R/niche_test_hpc.R
