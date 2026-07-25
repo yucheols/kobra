@@ -70,5 +70,6 @@ print(niche.sim.2)
 
 
 #### export output as RDS file
+saveRDS(niche.eq, '/home/yshin/mendel-nas1/kobra/output/niche_eq.rds')
 saveRDS(niche.sim.1, '/home/yshin/mendel-nas1/kobra/output/niche_sim1_1.rds')
 saveRDS(niche.sim.2, '/home/yshin/mendel-nas1/kobra/output/niche_sim1_2.rds')

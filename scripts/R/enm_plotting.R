@@ -52,41 +52,53 @@ plot(naja_bin[[2]])
 plot(naja_bin[[3]])
 
 
-#####  plot maps
+#####  plot continuous
 # stack continuous layers
 kobra_cont <- c(rast(test_models$preds[[1]]), rast(test_models$preds[[2]]), rast(test_models$preds[[3]]))
 names(kobra_cont) = c('N. kaouthia', 'N. fuxi', 'N. fuxi 2')
 
-# plot continuous
+# plot
 naja_cont_plot <- ggplot() +
   geom_spatraster(data = kobra_cont) +
   facet_wrap(~ lyr) +
   coord_sf(expand = F) +
-  scale_x_continuous(breaks = seq(round(ext(kobra_cont)[1] - 1, digits = 0), round(ext(kobra_cont)[2], digits = 0), by = 10)) +
+  scale_x_continuous(n.breaks = 4) +
+  scale_y_continuous(n.breaks = 4) +
   scale_fill_grass_c(palette = 'inferno',
                      na.value = NA,
                      name = 'RS') +
   theme_bw() +
-  theme(strip.text = element_text(size = 18),
+  theme(strip.text = element_text(size = 18, face = 'italic'),
         axis.text = element_text(size = 16),
         legend.title = element_text(size = 16),
         legend.text = element_text(size = 14))
 
 print(naja_cont_plot)
 
+# export
+ggsave('output/plots/naja_cont_plot.png', width = 25, height = 15, dpi = 600, units = 'cm')
 
+
+#####  plot binary
 # stack binary
-kobra_bin
+kobra_bin <- c(rast(naja_bin[[1]]), rast(naja_bin[[2]]), rast(naja_bin[[3]]))
+names(kobra_bin) = c('N. kaouthia', 'N. fuxi', 'N. fuxi 2')
 
-# plot binary
+# plot
 naja_bin_plot <- ggplot() +
   geom_spatraster(data = kobra_bin) +
   facet_wrap(~ lyr) +
   coord_sf(expand = F) +
-  scale_x_continuous(breaks = seq(round(ext(kobra_bin)[1] - 1, digits = 0), round(ext(kobra_bin)[2], digits = 0), by = 15)) +
+  scale_x_continuous(n.breaks = 4) +
+  scale_y_continuous(n.breaks = 4) +
   scale_fill_gradientn(colors = c('lightgrey', '#1E88E5'),
                        na.value = 'transparent') +
   theme_bw() +
-  theme(strip.text = element_text(size = 18),
+  theme(strip.text = element_text(size = 18, face = 'italic'),
         axis.text = element_text(size = 16),
         legend.position = 'none')
+
+print(naja_bin_plot)
+
+# export
+ggsave('output/plots/naja_bin_plot.png', width = 25, height = 15, dpi = 600, units = 'cm')
