@@ -14,17 +14,28 @@ library(ggplot2)
 
 #####  load model object
 test_models <- readRDS('output/test_models.rds')
-print(test_models)
+glimpse(test_models)
 
+#####  write variable contribution
+write.csv(test_models$contrib[[1]], 'output/ NAKA_enm_contrib.csv')
+write.csv(test_models$contrib[[2]], 'output/ NAFU_enm_contrib.csv')
+write.csv(test_models$contrib[[3]], 'output/ NAFU_VT_enm_contrib.csv')
+
+#####  write model metrics
+write.csv(test_models$metrics, 'output/enm_metrics.csv')
 
 #####  response curve data
 # Naja kaouthia
 naka_resp <- resp_data_pull(sp.name = 'Naja_kaouthia', model = test_models$models[[1]], 
                             names.var = c('bio1', 'bio2', 'bio3', 'bio12', 'bio14', 'bio15', 'bio18', 'bio19'))
 
-# Naja fuxi == model built with Vietnam data added
-nafu_resp <- resp_data_pull(sp.name = 'Naja_fuxi', model = test_models$models[[3]],
+# Naja fuxi
+nafu_resp <- resp_data_pull(sp.name = 'Naja_fuxi', model = test_models$models[[2]],
                             names.var = c('bio1', 'bio2', 'bio3', 'bio12', 'bio14', 'bio15', 'bio18', 'bio19'))
+
+# Naja fuxi == model built with Vietnam data added
+nafu_viet_resp <- resp_data_pull(sp.name = 'Naja_fuxi', model = test_models$models[[3]],
+                                 names.var = c('bio1', 'bio2', 'bio3', 'bio12', 'bio14', 'bio15', 'bio18', 'bio19'))
 
 
 #####  plot predictions
@@ -55,10 +66,10 @@ plot(naja_bin[[3]])
 #####  plot continuous
 # stack continuous layers
 kobra_cont <- c(rast(test_models$preds[[1]]), rast(test_models$preds[[2]]), rast(test_models$preds[[3]]))
-names(kobra_cont) = c('N. kaouthia', 'N. fuxi', 'N. fuxi 2')
+names(kobra_cont) = c('NAKA', 'NAFU', 'NAFU + VT')
 
 # plot
-naja_cont_plot <- ggplot() +
+ggplot() +
   geom_spatraster(data = kobra_cont) +
   facet_wrap(~ lyr) +
   coord_sf(expand = F) +
@@ -68,24 +79,23 @@ naja_cont_plot <- ggplot() +
                      na.value = NA,
                      name = 'RS') +
   theme_bw() +
-  theme(strip.text = element_text(size = 18, face = 'italic'),
+  theme(strip.text = element_text(size = 18),
         axis.text = element_text(size = 16),
         legend.title = element_text(size = 16),
         legend.text = element_text(size = 14))
 
-print(naja_cont_plot)
 
 # export
-ggsave('output/plots/naja_cont_plot.png', width = 25, height = 15, dpi = 600, units = 'cm')
+ggsave('output/plots/naja_cont_plot.png', width = 25, height = 10, dpi = 600, units = 'cm')
 
 
 #####  plot binary
 # stack binary
 kobra_bin <- c(rast(naja_bin[[1]]), rast(naja_bin[[2]]), rast(naja_bin[[3]]))
-names(kobra_bin) = c('N. kaouthia', 'N. fuxi', 'N. fuxi 2')
+names(kobra_bin) = c('NAKA', 'NAFU', 'NAFU + VT')
 
 # plot
-naja_bin_plot <- ggplot() +
+ggplot() +
   geom_spatraster(data = kobra_bin) +
   facet_wrap(~ lyr) +
   coord_sf(expand = F) +
@@ -94,11 +104,10 @@ naja_bin_plot <- ggplot() +
   scale_fill_gradientn(colors = c('lightgrey', '#1E88E5'),
                        na.value = 'transparent') +
   theme_bw() +
-  theme(strip.text = element_text(size = 18, face = 'italic'),
+  theme(strip.text = element_text(size = 18),
         axis.text = element_text(size = 16),
         legend.position = 'none')
 
-print(naja_bin_plot)
 
 # export
-ggsave('output/plots/naja_bin_plot.png', width = 25, height = 15, dpi = 600, units = 'cm')
+ggsave('output/plots/naja_bin_plot.png', width = 25, height = 10, dpi = 600, units = 'cm')

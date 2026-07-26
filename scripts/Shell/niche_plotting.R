@@ -13,8 +13,18 @@ eq_test <- readRDS('output/niche_eq.rds')
 niche_test_1 <- readRDS('output/niche_sim1_1.rds')
 niche_test_2 <- readRDS('output/niche_sim1_2.rds')
 
+##### check empirical overlap and p values
+# identity test ::: D_obs = 0.05071603 // I_obs = 0.1896737 // p_D = 0.000999001 // p_I = 0.000999001
+print(eq_test$p.values)
+print(eq_test$test.results)
 
-######## plot results
+# sim test 1 // p_D = 0.2147852 // p_I = 0.3476523
+print(niche_test_1$p.values)
+
+# sim test 2 // p_D = 0.05744256 // p_I = 0.12637363
+print(niche_test_2$p.values)
+
+##### plot results
 head(eq_test$test.results$sim)
 head(niche_test_1$test.results$sim)
 head(niche_test_2$test.results$sim)
@@ -43,7 +53,7 @@ D.data %>%
   facet_wrap(~ test, scales = 'free') +
   geom_histogram(fill = 'cornflowerblue', color = NA, alpha = 0.4, bins = 15) +
   geom_vline(xintercept = eq_test$test.results$obs$D, linetype = 2, linewidth = 1.2) +
-  xlab("Schoener's D") + ylab('Density') + 
+  xlab("Schoener's D") + ylab('Frequency') + 
   theme_bw() + 
   theme(strip.text = element_text(size = 14),
         axis.text = element_text(size = 12),
@@ -78,7 +88,7 @@ I.data %>%
   facet_wrap(~ test, scales = 'free') +
   geom_histogram(fill = 'orange', color = NA, alpha = 0.4, bins = 15) +
   geom_vline(xintercept = eq_test$test.results$obs$I, linetype = 2, linewidth = 1.2) +
-  xlab("Warren's I") + ylab('Density') + 
+  xlab("Warren's I") + ylab('Frequency') + 
   theme_bw() +
   theme(strip.text = element_text(size = 14),
         axis.text = element_text(size = 12),
